@@ -74,10 +74,10 @@
     "enabled": true
   },
   "coordinator": {
-    "address": "EQSAUZXULTTYZCLNJNTXQTQHOMOFZERHTCGTXOLTVAHKSA9OGAZDEKECURBRIXIJWNPFCQIOVFVVXJVD9",
+    "address": "",
     "securityLevel": 2,
-    "merkleTreeDepth": 23,
-    "mwm": 14,
+    "merkleTreeDepth": 18,
+    "mwm": 3,
     "stateFilePath": "coordinator.state",
     "merkleTreeFilePath": "coordinator.tree",
     "intervalSeconds": 60,
@@ -121,7 +121,9 @@
     "alias": "",
     "showAliasInGetNodeInfo": false,
     "disablePlugins": [],
-    "enablePlugins": []
+    "enablePlugins": [
+      "Coordinator"
+    ]
   },
   "logger": {
     "level": "info",
