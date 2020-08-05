@@ -136,14 +136,14 @@ func websocketRoute(c echo.Context) error {
 	hub.ServeWebsocket(c.Response(), c.Request(), func(client *websockethub.Client) {
 		log.Info("WebSocket client connection established")
 
-		client.Send(&msg{MsgTypeNodeStatus, currentNodeStatus()})
-		client.Send(&msg{MsgTypeConfirmedMsMetrics, cachedMilestoneMetrics})
-		client.Send(&msg{MsgTypeDatabaseSizeMetric, cachedDbSizeMetrics})
-		client.Send(&msg{MsgTypeDatabaseCleanupEvent, lastDbCleanup})
+		client.Send(&Msg{MsgTypeNodeStatus, currentNodeStatus()})
+		client.Send(&Msg{MsgTypeConfirmedMsMetrics, cachedMilestoneMetrics})
+		client.Send(&Msg{MsgTypeDatabaseSizeMetric, cachedDbSizeMetrics})
+		client.Send(&Msg{MsgTypeDatabaseCleanupEvent, lastDbCleanup})
 		start := tangle.GetLatestMilestoneIndex()
 		for i := start - 10; i <= start; i++ {
 			if cachedMsTailTx := getMilestoneTail(i); cachedMsTailTx != nil { // tx +1
-				client.Send(&msg{MsgTypeMs, &ms{cachedMsTailTx.GetTransaction().Tx.Hash, i}})
+				client.Send(&Msg{MsgTypeMs, &ms{cachedMsTailTx.GetTransaction().Tx.Hash, i}})
 				cachedMsTailTx.Release(true) // tx -1
 			} else {
 				break

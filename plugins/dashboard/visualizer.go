@@ -73,7 +73,7 @@ func runVisualizer() {
 			}
 
 			visualizerWorkerPool.TrySubmit(
-				&msg{
+				&Msg{
 					Type: MsgTypeVertex,
 					Data: &vertex{
 						ID:          tx.Tx.Hash,
@@ -96,7 +96,7 @@ func runVisualizer() {
 			}
 
 			visualizerWorkerPool.TrySubmit(
-				&msg{
+				&Msg{
 					Type: MsgTypeSolidInfo,
 					Data: &metainfo{
 						ID: tx.Tx.Hash[:VisualizerIdLength],
@@ -113,7 +113,7 @@ func runVisualizer() {
 
 			for _, txHash := range bndl.GetTxHashes() {
 				visualizerWorkerPool.TrySubmit(
-					&msg{
+					&Msg{
 						Type: MsgTypeMilestoneInfo,
 						Data: &metainfo{
 							ID: txHash.Trytes()[:VisualizerIdLength],
@@ -130,7 +130,7 @@ func runVisualizer() {
 		}
 
 		visualizerWorkerPool.TrySubmit(
-			&msg{
+			&Msg{
 				Type: MsgTypeMilestoneInfo,
 				Data: &metainfo{
 					ID: txHash.Trytes()[:VisualizerIdLength],
@@ -149,7 +149,7 @@ func runVisualizer() {
 		}
 
 		visualizerWorkerPool.TrySubmit(
-			&msg{
+			&Msg{
 				Type: MsgTypeConfirmedInfo,
 				Data: &confirmationinfo{
 					ID:          confirmation.MilestoneHash.Trytes()[:VisualizerIdLength],
@@ -164,7 +164,7 @@ func runVisualizer() {
 		}
 
 		visualizerWorkerPool.TrySubmit(
-			&msg{
+			&Msg{
 				Type: MsgTypeTipInfo,
 				Data: &tipinfo{
 					ID:    tip.Hash.Trytes()[:VisualizerIdLength],
@@ -179,7 +179,7 @@ func runVisualizer() {
 		}
 
 		visualizerWorkerPool.TrySubmit(
-			&msg{
+			&Msg{
 				Type: MsgTypeTipInfo,
 				Data: &tipinfo{
 					ID:    tip.Hash.Trytes()[:VisualizerIdLength],

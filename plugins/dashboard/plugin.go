@@ -69,18 +69,18 @@ func configure(plugin *node.Plugin) {
 	wsSendWorkerPool = workerpool.New(func(task workerpool.Task) {
 		switch x := task.Param(0).(type) {
 		case *metricsplugin.TPSMetrics:
-			hub.BroadcastMsg(&msg{MsgTypeTPSMetric, x})
-			hub.BroadcastMsg(&msg{MsgTypeNodeStatus, currentNodeStatus()})
-			hub.BroadcastMsg(&msg{MsgTypePeerMetric, peerMetrics()})
+			hub.BroadcastMsg(&Msg{MsgTypeTPSMetric, x})
+			hub.BroadcastMsg(&Msg{MsgTypeNodeStatus, currentNodeStatus()})
+			hub.BroadcastMsg(&Msg{MsgTypePeerMetric, peerMetrics()})
 		case *tangle.Bundle:
 			// Milestone
-			hub.BroadcastMsg(&msg{MsgTypeNodeStatus, currentNodeStatus()})
+			hub.BroadcastMsg(&Msg{MsgTypeNodeStatus, currentNodeStatus()})
 		case []*tangleplugin.ConfirmedMilestoneMetric:
-			hub.BroadcastMsg(&msg{MsgTypeConfirmedMsMetrics, x})
+			hub.BroadcastMsg(&Msg{MsgTypeConfirmedMsMetrics, x})
 		case []*dbSize:
-			hub.BroadcastMsg(&msg{MsgTypeDatabaseSizeMetric, x})
+			hub.BroadcastMsg(&Msg{MsgTypeDatabaseSizeMetric, x})
 		case *databaseplugin.DatabaseCleanup:
-			hub.BroadcastMsg(&msg{MsgTypeDatabaseCleanupEvent, x})
+			hub.BroadcastMsg(&Msg{MsgTypeDatabaseCleanupEvent, x})
 		}
 		task.Return(nil)
 	}, workerpool.WorkerCount(wsSendWorkerCount), workerpool.QueueSize(wsSendWorkerQueueSize))
@@ -219,7 +219,8 @@ const (
 	MsgTypeAvgSpamMetrics
 )
 
-type msg struct {
+// Msg represents a websocket message.
+type Msg struct {
 	Type byte        `json:"type"`
 	Data interface{} `json:"data"`
 }
